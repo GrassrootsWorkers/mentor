@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html;charset=utf-8"/>
+    <title>注册用户</title>
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="/plugin/bootstrap/css/bootstrap.min.css"/>
+    <script src="/plugin/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <form class="form-horizontal" role="form" >
+        <div class="form-group">
+            <label for="user_name" class="col-sm-2 control-label">用户名</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="user_name"  name = "userName" placeholder="请输入用户名">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">密码</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="button"  onclick="login()" class="btn btn-default">登录</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+
+    function login() {
+        $.ajax({
+            url:"/user/login",
+            data:{
+                "userName":$("#user_name").val(),
+                "password":$("#password").val()
+            },
+            dataType:"json",
+            type:"POST",
+            async:false,
+            success:function (data) {
+                if("success" == data.code){
+                    var apiId = $.cookie("apiId");
+                    if(apiId !=""&& apiId != undefined ){
+                        window.location.href="http://localhost:8080/apiworks/servicedetail/"+apiId+".html"
+                    }else{
+                        window.location.href="http://localhost:8080/apiworks/servicelist"
+                    }
+
+                }else{
+                    alert(data.msg)
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>
