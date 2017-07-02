@@ -14,16 +14,25 @@ public class MentorUser extends BaseBean {
     private String password;
     private String salt;
     private Date registerDate;
-    private Date lastLogin;
+    private Date loginDate;
     private String userType;
     private String userStatus;
+    private String captcha;
 
-    public Date getLastLogin() {
-        return lastLogin;
+    public String getCaptcha() {
+        return captcha;
     }
 
-    public void setLastLogin(Date lastLogin) {
-        this.lastLogin = lastLogin;
+    public void setCaptcha(String captcha) {
+        this.captcha = captcha;
+    }
+
+    public Date getLoginDate() {
+        return loginDate;
+    }
+
+    public void setLoginDate(Date loginDate) {
+        this.loginDate = loginDate;
     }
 
     public String getUserName() {

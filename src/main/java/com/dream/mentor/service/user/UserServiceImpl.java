@@ -34,6 +34,7 @@ public class UserServiceImpl implements IUserService {
         mentorUser.setPassword(password);
         mentorUser.setCreateDate(new Date());
         mentorUser.setUpdateDate(new Date());
+        mentorUser.setLoginDate(new Date());
         return userDao.saveUser(mentorUser);
     }
 
@@ -46,7 +47,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public MentorUser getUserByName(String userName) {
         if (StringUtil.isEmpty(userName)) return null;
-        return userDao.getUserByName(userName);
+        return userDao.getUserByUserName(userName);
     }
     /**
      * 根据用户id查询用户
@@ -58,6 +59,25 @@ public class UserServiceImpl implements IUserService {
     public MentorUser getUserById(long userId) {
         return userDao.getUserByUserId(userId);
     }
+
+    @Override
+    public MentorUser getUserByOpenId(String openId) {
+        return userDao.getUserByOpenId(openId);
+    }
+
+    @Override
+    public int updateMentorUser(MentorUser user) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        if(StringUtil.areNotEmpty(user.getPassword())){
+            String salt = PBKDFUtil.generateSalt();
+            user.setSalt(salt);
+            String password = PBKDFUtil.getEncryptedPassword(user.getPassword(), salt);
+            user.setPassword(password);
+            return userDao.updateUser(user);
+        }
+        return 0;
+
+    }
+
     /**
      * 用户登陆获取access_token
      *

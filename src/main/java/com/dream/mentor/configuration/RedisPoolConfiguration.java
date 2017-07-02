@@ -27,17 +27,19 @@ public class RedisPoolConfiguration {
     private int port;
     @Value("${redis.timeout}")
     private int timeout;
-    @Value("${redis.testOnBorrow}")
-    private boolean testOnBorrow;
+    @Value("${redis.password}")
+    private String password;
+   /* @Value("${redis.testOnBorrow}")
+    private boolean testOnBorrow;*/
 
     @Bean
     public JedisPool getPool() {
         JedisPoolConfig poolConfig = new JedisPoolConfig();
-        poolConfig.setTestOnBorrow(testOnBorrow);
+        //poolConfig.setTestOnBorrow(testOnBorrow);
         poolConfig.setMinIdle(minIdle);
         poolConfig.setMaxIdle(maxIdle);
         poolConfig.setMaxTotal(maxTotal);
-        JedisPool jedisPool = new JedisPool(poolConfig, host, port, timeout);
+        JedisPool jedisPool = new JedisPool(poolConfig, host, port, timeout,password);
         return jedisPool;
     }
 }

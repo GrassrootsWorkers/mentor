@@ -20,7 +20,7 @@ public class CreateAllIndexTask {
         log.info("The time is now {}", dateFormat.format(new Date()));
     }*/
 
-    @Scheduled(cron = "0 0/20 * * * ?")
+
     public void testCron(){
         log.info("The time is now 》》》》》》》》》》》》》》》》{}", dateFormat.format(new Date()));
     }

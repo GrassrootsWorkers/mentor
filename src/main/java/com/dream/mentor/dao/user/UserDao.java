@@ -11,11 +11,16 @@ public interface UserDao {
     /**
      * 根据用户名查询用户
      *
-     * @param userName
+     * @param openId
      * @return
      */
-    @Select("select id as userId, user_name as userName,mobile,password,salt,company_name as companyName,telephone,user_status as userStatus from api_users where user_name = #{userName} ")
-    MentorUser getUserByName(@Param("userName") String userName);
+    @Select("select id,user_name,mobile,open_id,password,register_date,user_type,salt,user_status,login_date,create_date,update_date" +
+            " from mentor_users  where open_id = #{openId}")
+    MentorUser getUserByOpenId(@Param("openId") String openId);
+
+    @Select("select id,user_name,mobile,open_id,password,register_date,user_type,salt,user_status,login_date,create_date,update_date" +
+            " from mentor_users  where user_name = #{userName}")
+    MentorUser getUserByUserName(@Param("userName") String userName);
 
     /**
      * 根据用户Id查询用户
@@ -23,15 +28,16 @@ public interface UserDao {
      * @param userId
      * @return
      */
-    @Select("select id as userId, user_name as userName,mobile,password,salt,company_name as companyName,telephone,user_status as userStatus from api_users where id = #{userId} ")
+    @Select("select id,user_name,mobile,open_id,password,register_date,user_type,salt,user_status,login_date,create_date,update_date" +
+            " from mentor_users  where id = #{userId}")
     MentorUser getUserByUserId(@Param("userId") long userId);
 
-    @Insert("insert into api_users (user_name,password,salt,mobile,company_name,address,telephone) " +
+    @Insert("insert into mentor_users (user_name,mobile,open_id,password,register_date,user_type,salt,user_status,login_date,create_date,update_date) " +
             "values" +
-            "(#{mentorUser.userName},#{mentorUser.password},#{mentorUser.salt},#{mentorUser.mobile},#{mentorUser.companyName},#{mentorUser.address},#{mentorUser.telephone})")
-    @Options(useGeneratedKeys = true, keyProperty = "mentorUser.userId")
-    long saveUser(@Param("mentorUser") MentorUser mentorUser);
+            "(#{user.userName},#{user.mobile},#{user.openId},#{user.password},#{user.registerDate},#{user.userType},#{user.salt},#{user.userStatus},#{user.loginDate},#{user.createDate},#{user.updateDate})")
+    @Options(useGeneratedKeys = true, keyProperty = "user.id")
+    long saveUser(@Param("user") MentorUser mentorUser);
 
-    @Update("update api_users set user_status = #{mentorUser.userStatus} ,password = #{password} where id = #{userId}")
-    int updateUser(@Param("mentorUser")MentorUser mentorUser);
+    @UpdateProvider(type = UserSqlProvider.class, method = "updateMentorUser")
+    int updateUser(MentorUser mentorUser);
 }

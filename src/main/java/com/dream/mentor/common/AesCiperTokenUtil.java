@@ -67,7 +67,7 @@ public class AesCiperTokenUtil {
 	 * @return 返回加密数据 
 	 */
 	public static String aesEncrypt(String data) {
-		return Base64.encode(aesCipher(data, Cipher.ENCRYPT_MODE).getBytes());
+		return Base64Encoder.encode(aesCipher(data, Cipher.ENCRYPT_MODE).getBytes());
 	}
 	
 	/** 
@@ -76,7 +76,7 @@ public class AesCiperTokenUtil {
 	 * @return 返回解密数据 
 	 */
 	public static String aesDecrypt(String data) {
-		return aesCipher(new String(Base64.decode(data)), Cipher.DECRYPT_MODE);
+		return aesCipher(new String(Base64Decoder.decode(data)), Cipher.DECRYPT_MODE);
 	}
 	
 	/** 
