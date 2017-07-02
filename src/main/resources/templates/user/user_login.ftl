@@ -10,11 +10,11 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-horizontal" role="form" action="/user/login">
+    <form class="form-horizontal" role="form" action="/mentorUser/login">
         <div class="form-group">
             <label for="user_name" class="col-sm-2 control-label">名字</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="user_name" value="${user.userName}" name = "userName" placeholder="请输入名字">
+                <input type="text" class="form-control" id="user_name" value="${mentorUser.userName}" name = "userName" placeholder="请输入名字">
             </div>
         </div>
         <div class="form-group">

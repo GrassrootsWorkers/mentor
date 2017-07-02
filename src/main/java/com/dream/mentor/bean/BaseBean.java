@@ -7,22 +7,15 @@ import java.util.Date;
  * Created by Administrator on 2017/5/4.
  */
 public class BaseBean implements Serializable {
-    private Long id;
+    private int id;
     private Date createDate;
     private Date updateDate;
     private int pageNo;          //当前页码
     private int pageSize;        //每页行数
     private int totalRecord;      //总记录数
     private int totalPage;        //总页数
-    private Long userId;
+    private int userId;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Date getCreateDate() {
         return createDate;
@@ -56,11 +49,19 @@ public class BaseBean implements Serializable {
         this.pageSize = pageSize;
     }
 
-    public Long getUserId() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 

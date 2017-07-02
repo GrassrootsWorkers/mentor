@@ -280,7 +280,7 @@ public abstract class WebUtils {
         conn.setDoInput(true);
         conn.setDoOutput(true);
         conn.setRequestProperty("Accept", "text/xml,text/javascript,text/html");
-        conn.setRequestProperty("User-Agent", "top-sdk-java");
+        conn.setRequestProperty("MentorUser-Agent", "top-sdk-java");
         conn.setRequestProperty("Content-Type", ctype);
         return conn;
     }

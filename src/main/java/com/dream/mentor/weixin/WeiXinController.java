@@ -25,8 +25,7 @@ import java.util.Date;
 @RequestMapping(value = "/partner")
 public class WeiXinController extends BaseAction {
     private Logger logger = LoggerFactory.getLogger(WeiXinController.class);
-    @Autowired
-    JedisPool jedisPool;
+
     @RequestMapping(value = "/msg", method = RequestMethod.POST)
     public void getWeiXinMsgPost(HttpServletRequest request, HttpServletResponse response) {
         WeixinDataConvert<SendMessage> sendConvert = new WeixinDataConvert<SendMessage>();
@@ -55,7 +54,7 @@ public class WeiXinController extends BaseAction {
                 }
             }
 
-            String mobile =null;//
+            String mobile = null;//
             //获取合作商的手机号
             if (mobile == null) {
                 //sendMessage.setContent("账号未认证");
@@ -69,17 +68,14 @@ public class WeiXinController extends BaseAction {
                 sendMessage.setContent("相关功能在完善当中！");
                 String returnXml = sendConvert.ConvertObjectToXml(sendMessage);
                 response.getWriter().write(returnXml);
-                logger.info("other return xml={}, openId={}", returnXml,receivedMsg.getFromUserName());
+                logger.info("other return xml={}, openId={}", returnXml, receivedMsg.getFromUserName());
                 return;
             }
-
 
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("error msg={}", e.getMessage());
         }
-
-
     }
 
     private String getPostData(HttpServletRequest request) throws IOException {
@@ -91,8 +87,6 @@ public class WeiXinController extends BaseAction {
         }
         return postData.toString();
     }
-
-
 
 
 }

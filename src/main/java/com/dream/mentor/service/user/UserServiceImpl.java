@@ -1,6 +1,6 @@
 package com.dream.mentor.service.user;
 
-import com.dream.mentor.bean.user.User;
+import com.dream.mentor.bean.user.MentorUser;
 import com.dream.mentor.common.StringUtil;
 import com.dream.mentor.dao.user.UserDao;
 import com.dream.mentor.interfaces.user.IUserService;
@@ -27,14 +27,14 @@ public class UserServiceImpl implements IUserService {
     private UserDao userDao;
 
     @Override
-    public long saveUser(User user) throws Exception {
+    public long saveUser(MentorUser mentorUser) throws Exception {
         String salt = PBKDFUtil.generateSalt();
-        user.setSalt(salt);
-        String password = PBKDFUtil.getEncryptedPassword(user.getPassword(), salt);
-        user.setPassword(password);
-        user.setCreateDate(new Date());
-        user.setUpdateDate(new Date());
-        return userDao.saveUser(user);
+        mentorUser.setSalt(salt);
+        String password = PBKDFUtil.getEncryptedPassword(mentorUser.getPassword(), salt);
+        mentorUser.setPassword(password);
+        mentorUser.setCreateDate(new Date());
+        mentorUser.setUpdateDate(new Date());
+        return userDao.saveUser(mentorUser);
     }
 
     /**
@@ -44,7 +44,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public User getUserByName(String userName) {
+    public MentorUser getUserByName(String userName) {
         if (StringUtil.isEmpty(userName)) return null;
         return userDao.getUserByName(userName);
     }
@@ -55,25 +55,25 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public User getUserById(long userId) {
+    public MentorUser getUserById(long userId) {
         return userDao.getUserByUserId(userId);
     }
     /**
      * 用户登陆获取access_token
      *
-     * @param user
+     * @param mentorUser
      * @param password
      * @return
      * @throws Exception
      */
     @Override
-    public String userLogin(User user, String password, String platform) {
+    public String userLogin(MentorUser mentorUser, String password, String platform) {
         String accessToken = null;
-        String salt = user.getSalt();
+        String salt = mentorUser.getSalt();
         try {
             String encryptedPwd = PBKDFUtil.getEncryptedPassword(password, salt);
-            if (encryptedPwd.equals(user.getPassword())) {
-                String data = user.getUserId() + ":" + (System.currentTimeMillis() + EXPIRE_TIME) + ":" + platform;
+            if (encryptedPwd.equals(mentorUser.getPassword())) {
+                String data = mentorUser.getUserId() + ":" + (System.currentTimeMillis() + EXPIRE_TIME) + ":" + platform;
                 accessToken = AesCiperTokenUtil.aesEncrypt(data);
             }
         } catch (NoSuchAlgorithmException e) {

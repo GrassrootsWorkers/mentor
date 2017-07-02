@@ -2,19 +2,29 @@ package com.dream.mentor.bean.user;
 
 import com.dream.mentor.bean.BaseBean;
 
+import java.util.Date;
+
 /**
  * Created by Administrator on 2017/5/4.
  */
-public class User extends BaseBean {
+public class MentorUser extends BaseBean {
     private String openId;
     private String userName;
     private String mobile;
     private String password;
     private String salt;
-    private String companyName;
-    private String address;
-    private String telephone;
+    private Date registerDate;
+    private Date lastLogin;
+    private String userType;
     private String userStatus;
+
+    public Date getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(Date lastLogin) {
+        this.lastLogin = lastLogin;
+    }
 
     public String getUserName() {
         return userName;
@@ -48,28 +58,28 @@ public class User extends BaseBean {
         this.salt = salt;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getOpenId() {
+        return openId;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setOpenId(String openId) {
+        this.openId = openId;
     }
 
-    public String getAddress() {
-        return address;
+    public Date getRegisterDate() {
+        return registerDate;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
     }
 
-    public String getTelephone() {
-        return telephone;
+    public String getUserType() {
+        return userType;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
     public String getUserStatus() {
@@ -78,13 +88,5 @@ public class User extends BaseBean {
 
     public void setUserStatus(String userStatus) {
         this.userStatus = userStatus;
-    }
-
-    public String getOpenId() {
-        return openId;
-    }
-
-    public void setOpenId(String openId) {
-        this.openId = openId;
     }
 }

@@ -1,6 +1,6 @@
 package com.dream.mentor.interfaces.user;
 
-import com.dream.mentor.bean.user.User;
+import com.dream.mentor.bean.user.MentorUser;
 
 /**
  * Created by Administrator on 2017/5/5.
@@ -8,32 +8,32 @@ import com.dream.mentor.bean.user.User;
 public interface IUserService {
     /**
      * 注册用户
-     * @param user
+     * @param mentorUser
      * @return
      * @throws Exception
      */
-    long saveUser(User user) throws Exception;
+    long saveUser(MentorUser mentorUser) throws Exception;
 
     /**
      * 根据用户名查询用户
      * @param userName
      * @return
      */
-    User getUserByName(String userName);
+    MentorUser getUserByName(String userName);
 
     /**
      * 根据用户Id查询用户
      * @param userId
      * @return
      */
-    User getUserById(long userId);
+    MentorUser getUserById(long userId);
 
     /**
      * 用户登陆
-     * @param user
+     * @param mentorUser
      * @param password
      * @param platform
      * @return
      */
-    String userLogin(User user, String password, String platform);
+    String userLogin(MentorUser mentorUser, String password, String platform);
 }

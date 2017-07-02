@@ -1,6 +1,6 @@
 package com.dream.mentor.controller.user;
 
-import com.dream.mentor.bean.user.User;
+import com.dream.mentor.bean.user.MentorUser;
 import com.dream.mentor.cache.IRedisCache;
 import com.dream.mentor.common.StringUtil;
 import com.dream.mentor.service.user.UserServiceImpl;
@@ -32,12 +32,12 @@ public class UserController {
     @ResponseBody
     public Map<String,String> userLogin(HttpServletResponse response,String userName, String password){
         Map<String,String> returnData = new HashMap<String,String>();
-        User user = userService.getUserByName(userName);
-        if(user == null){
+        MentorUser mentorUser = userService.getUserByName(userName);
+        if(mentorUser == null){
             returnData.put("code","error");
             returnData.put("msg","用户不存在");
         }else{
-            String accessToken = userService.userLogin(user,password,"web");
+            String accessToken = userService.userLogin(mentorUser,password,"web");
             if(StringUtil.isEmpty(accessToken)){
                 returnData.put("code","error");
                 returnData.put("msg","密码错误");
@@ -50,7 +50,7 @@ public class UserController {
                 foo.setMaxAge(7*24*60*60); //set expire time to 1000 sec
                 response.addCookie(foo); //put cookie in response
                 try{
-                    redisCacheService.userServerLogin(userName,user.getUserId());
+                    redisCacheService.userServerLogin(userName, mentorUser.getUserId());
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -61,13 +61,13 @@ public class UserController {
         return returnData;
     }
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String registerUser(User user){
+    public String registerUser(MentorUser mentorUser){
         try {
-           userService.saveUser(user);
-            long userId = user.getUserId();
+           userService.saveUser(mentorUser);
+            long userId = mentorUser.getUserId();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "user/user_login";
+        return "mentorUser/user_login";
     }
 }

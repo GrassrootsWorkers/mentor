@@ -1,11 +1,11 @@
 package com.dream.mentor.interceptors;
 
 import com.dream.mentor.bean.invokerecords.InvokeRecord;
+import com.dream.mentor.bean.user.MentorUser;
 import com.dream.mentor.interfaces.api.IApiInfoService;
 import com.google.common.util.concurrent.RateLimiter;
 import com.dream.mentor.bean.apiinfo.UserSubscribeApiInfo;
 import com.dream.mentor.bean.constant.UserStatusEnum;
-import com.dream.mentor.bean.user.User;
 import com.dream.mentor.cache.IRedisCache;
 import com.dream.mentor.common.AesCiperTokenUtil;
 import com.dream.mentor.common.BaseAction;
@@ -52,12 +52,12 @@ public class ApiInvokeTimesInterceptor implements HandlerInterceptor {
             } else {
                 long userId = Long.parseLong(loginInfo[0]);
                 //验证用户账户
-                User user = userService.getUserById(userId);
-                if (user == null) {
+                MentorUser mentorUser = userService.getUserById(userId);
+                if (mentorUser == null) {
                     throw new Exception("用户已经被注销");
                 } else {
                     //用户状态 定时任务更新用户状态
-                    String userStatus = user.getUserStatus();
+                    String userStatus = mentorUser.getUserStatus();
                     if (UserStatusEnum.ARREARS.getValue().equals(userStatus)) {
                         throw new Exception("已欠费，请充值后再重试");
                     } else {

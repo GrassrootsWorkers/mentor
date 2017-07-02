@@ -1,6 +1,6 @@
 package com.dream.mentor.factory.apiprovider;
 
-import com.dream.mentor.bean.QueryParameterBaseBean;
+import com.dream.mentor.bean.QueryBean;
 import com.dream.mentor.common.WebUtils;
 
 import java.io.IOException;
@@ -16,7 +16,7 @@ public class QDJKSearchFactory implements IApiProviderFactory {
 }
 class QDJKSearch implements BaseApiProvider{
     @Override
-    public String doGet(String url, QueryParameterBaseBean baseBean, String charset) {
+    public String doGet(String url, QueryBean baseBean, String charset) {
         String result = null;
         try {
             result = WebUtils.doGet(url,WebUtils.transBean2Map(baseBean),charset);
@@ -27,7 +27,7 @@ class QDJKSearch implements BaseApiProvider{
     }
 
     @Override
-    public String doPost(String url, QueryParameterBaseBean baseBean,int connectTimeout, int readTimeout, String charSet) {
+    public String doPost(String url, QueryBean baseBean, int connectTimeout, int readTimeout, String charSet) {
         String result = null;
         try {
             result = WebUtils.doPost(url,WebUtils.transBean2Map(baseBean),charSet,connectTimeout,readTimeout);

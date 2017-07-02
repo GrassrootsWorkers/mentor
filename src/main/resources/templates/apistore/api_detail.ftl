@@ -114,7 +114,7 @@
             success: function (data) {
                if("login" == data.code);{
                    $.cookie("apiId", apiId , { path: '/'});
-                   window.location.href="http://localhost:8080/html/user/user_login.html";
+                   window.location.href="http://localhost:8080/html/mentorUser/user_login.html";
                 }
             }
 

@@ -19,18 +19,9 @@ import java.util.Date;
  * Created by Administrator on 2016/1/17 0017.
  */
 public class BaseAction {
-  
-	public static final String VALIDATE_CODE = "validateCode";
-	public static final String CURRENT_USER = "ID";
     protected HttpServletRequest request;
     protected HttpServletResponse response;
 
-
-    protected ModelAndView returnLoginHtml(){
-        RedirectView redirectView = new RedirectView("/jsp/user/user_login.html");
-        ModelAndView view = new ModelAndView(redirectView);
-        return view;
-    }
     public HttpServletRequest getRequest() {
         return request;
     }
@@ -47,10 +38,6 @@ public class BaseAction {
         this.response = response;
     }
 
-    public Long getFarmerId(String mobile){
-        Long farmerId = (Long)this.request.getSession().getAttribute(mobile);
-        return farmerId;
-    }
     protected  String getCookieValue(String key){
         Cookie[] cookies = request.getCookies();
         if(cookies == null) return null;
