@@ -28,6 +28,31 @@ public class WeiXinController extends BaseAction {
     private Logger logger = LoggerFactory.getLogger(WeiXinController.class);
     @Autowired
     IUserService userService;
+    //验证双方协商的token是否一致
+    @RequestMapping(value = "/msg", method = RequestMethod.GET)
+    public void validateWeiXinURL(HttpServletRequest request, HttpServletResponse response) {
+        String signature = request.getParameter("signature");
+        String timestamp = request.getParameter("timestamp");
+        String nonce = request.getParameter("nonce");
+        String echoStr = request.getParameter("echostr");
+        String token = "UDW5pqTDYGmaqhOL0gw";
+        logger.info("wx >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>signature={}", signature);
+        try {
+            String[] params = new String[]{token, timestamp, nonce};
+            params = super.sortStrings(params);
+            if (super.validateSign(params, signature)) {
+                //回写微信传来的echoStr
+                response.getWriter().write(echoStr);
+                return;
+            } else {
+                response.getWriter().write("token error");
+                return;
+            }
+        } catch (Exception e) {
+            logger.error("sigin error msg={}", e.getMessage());
+        }
+
+    }
     @RequestMapping(value = "/msg", method = RequestMethod.POST)
     public void getWeiXinMsgPost(HttpServletRequest request, HttpServletResponse response) {
         WeixinDataConvert<SendMessage> sendConvert = new WeixinDataConvert<SendMessage>();

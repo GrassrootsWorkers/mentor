@@ -1,6 +1,7 @@
 package com.dream.mentor;
 
 
+import com.dream.mentor.common.SHAUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -12,7 +13,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -69,6 +72,25 @@ public class BaseAction {
     public boolean validateCode(String key,String destCode){
         String code = (String)request.getSession().getAttribute(key);
         return destCode.equalsIgnoreCase(code);
+    }
+    public String[] sortStrings(String[] strArr) {
+        Arrays.sort(strArr, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareTo(o2);
+            }
+        });
+        return strArr;
+    }
+    public boolean validateSign(String[] strArr, String sign) {
+        StringBuffer params = new StringBuffer();
+        for (String s : strArr) {
+            params.append(s);
+        }
+        String destSign = SHAUtil.SHA(params.toString());
+        if (sign.equals(destSign))
+            return true;
+        return false;
     }
 
     private  int daysBetween(Date smdate, Date bdate) throws ParseException {
