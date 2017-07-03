@@ -87,13 +87,13 @@ public class WeiXinController extends BaseAction {
                     //验证手机号是否绑定
                 }
             }
-
-            String mobile = null;//
+            MentorUser user = userService.getUserByOpenId(receivedMsg.getFromUserName());
+            String mobile = user.getMobile();//
             //获取合作商的手机号
             if (mobile == null) {
                 //sendMessage.setContent("账号未认证");
                 //返回完善资料的url
-                sendMessage.setContent(String.format("您还没完善您的联系方式 请点击<a href='http://m.sangepg.com/front/partner/toPage/partner?openId=%s'>《完善联系方式》</a>", receivedMsg.getFromUserName()));
+                sendMessage.setContent(String.format("您的信息待完善请点击<a href='http://mentor.sangepg.com/mentor/user/to/bind?openId=%s&userId=%d'>完善用户信息</a>", receivedMsg.getFromUserName(),user.getId()));
                 String returnXml = sendConvert.ConvertObjectToXml(sendMessage);
                 logger.info("mobile return xml={}", returnXml);
                 response.getWriter().write(returnXml);
