@@ -92,6 +92,7 @@
                 <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
                     <div class="section-heading text-center">
                         <h2 class="h-bold">成为老师</h2>
+                        <p>从事计算机10年以上</p>
                     </div>
                 </div>
             </div>
@@ -102,14 +103,14 @@
             <div class="col-md-8 col-md-offset-2">
                 <form action="/mentor/user/teacher/extra" method="post"  role="form" id ="teacher_form" class="contactForm">
                     <div class="form-group">
-                        <label for="name" class="form-label">真实姓名</label>
-                        <input type="text" name="name" class="form-control" placeholder="真实姓名"/>
+                        <label for="teacher_name" class="form-label">姓名</label>
+                        <input type="text" name="name" id="teacher_name" class="form-control" placeholder="您的真实姓名"/>
                         <div class="validation"></div>
                     </div>
                     <div class="form-group">
                         <label for="province_btn" class="form-label">籍贯</label>
                         <div class="btn-group">
-                            <input type="hidden" name="province" id="province"/>
+                            <input type="hidden" name="province" id="province" value="北京市"/>
                             <button type="button" id="province_btn" class="btn btn-default">北京市</button>
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 <span class="caret"></span>
@@ -123,7 +124,7 @@
                             </ul>
                         </div>
                         <div class="btn-group">
-                            <input type="hidden" name="city" id="city"/>
+                            <input type="hidden" name="city" id="city" value="北京市"/>
                             <button type="button" id="city_btn" class="btn btn-default">北京市</button>
                             <button type="button" class="btn btn-default dropdown-toggle"  data-toggle="dropdown">
                                 <span class="caret"></span>
@@ -136,7 +137,7 @@
                             </ul>
                         </div>
                         <div class="btn-group">
-                            <input type="hidden" name="area" id="area"/>
+                            <input type="hidden" name="area" id="area" value="海淀区"/>
                             <button type="button" id="area_btn" class="btn btn-default">海淀区</button>
                             <button type="button" class="btn btn-default dropdown-toggle"
                                     data-toggle="dropdown">
@@ -146,7 +147,7 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="javascript:void(0)" onclick="select_area('1','海淀区')">上海市</a></li>
                                 <li class="divider"></li>
-                                <li><a href="javascript:void(0)" onclick="select_area('2','单县')">单县</a></li>
+                                <li><a href="javascript:void(0)" onclick="select_area('2','历城区')">历城区</a></li>
                             </ul>
                         </div>
 
@@ -188,43 +189,103 @@
     <div class="container">
         <div class="row marginbot-80">
             <div class="col-md-8 col-md-offset-2">
-                <form action="/mentor/user/bind" method="post" method="post" role="form" class="contactForm">
+                <form action="/mentor/user/student/extra"  id = "student_form" method="post"  role="form" class="contactForm" enctype=”multipart/form-data”>
                     <div class="form-group">
-                        <label for="name" class="form-label">登陆名</label>
-                        <input type="text" name="userName" class="form-control" id="name" placeholder="登录名"
-                               data-rule="minlen:4" data-msg="Please enter at least 4 chars"/>
+                        <label for="student_name" class="form-label">姓名</label>
+                        <input type="text" name="name" class="form-control" id="student_name" placeholder="您的真实姓名"/>
+                        <div class="validation"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="province_btn" class="form-label">籍贯</label>
+                        <div class="btn-group">
+                            <input type="hidden" name="province" id="student_province" value="北京市"/>
+                            <button type="button" id="student_province_btn" class="btn btn-default">北京市</button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                                <span class="sr-only">切换下拉菜单</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="javascript:void(0)" onclick="student_select_province('0','上海市')">北京市</a></li>
+                                <li><a href="javascript:void(0)" onclick="student_select_province('1','上海市')">上海市</a></li>
+                                <li class="divider"></li>
+                                <li><a href="javascript:void(0)" onclick="student_select_province('2','山东省')">山东省</a></li>
+                            </ul>
+                        </div>
+                        <div class="btn-group">
+                            <input type="hidden" name="city" id="student_city" value="北京市"/>
+                            <button type="button" id="student_city_btn" class="btn btn-default">北京市</button>
+                            <button type="button" class="btn btn-default dropdown-toggle"  data-toggle="dropdown">
+                                <span class="caret"></span>
+                                <span class="sr-only">切换下拉菜单</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="javascript:void(0)" onclick="student_select_city('1','上海市')">上海市</a></li>
+                                <li class="divider"></li>
+                                <li><a href="javascript:void(0)" onclick="student_select_city('2','济南市')">济南市</a></li>
+                            </ul>
+                        </div>
+                        <div class="btn-group">
+                            <input type="hidden" name="area" id="student_area" value="海淀区"/>
+                            <button type="button" id="student_area_btn" class="btn btn-default">海淀区</button>
+                            <button type="button" class="btn btn-default dropdown-toggle"
+                                    data-toggle="dropdown">
+                                <span class="caret"></span>
+                                <span class="sr-only">切换下拉菜单</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="javascript:void(0)" onclick="student_select_area('1','海淀区')">上海市</a></li>
+                                <li class="divider"></li>
+                                <li><a href="javascript:void(0)" onclick="student_select_area('2','历城区')">历城区</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="student_school">毕业院校</label>
+                        <input type="text" class="form-control" name="school" id="student_school" placeholder="毕业学校"/>
+                    </div>
+                    <div class="form-group">
+                        <label  class="form-label">从事计算机时间</label>
+                        <input type="text" name="workDate" class="form-control" value="2008-07-01" id="workDatetimepicker">
+                    </div>
+                    <div class="form-group">
+                        <label for="company" class="form-label">目前所在公司</label>
+                        <input type="text" class="form-control" name="company" id="company"/>
+                        <div class="validation"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="industry" class="form-label">公司所属行业</label>
+                        <input type="text" class="form-control" name="industry" id="industry"/>
+                        <div class="validation"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="skilled_in" class="form-label">擅长技能</label>
+                        <input type="text" class="form-control" name="skilledIn" id="skilled_in"/>
+                        <div class="validation"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="short_skill" class="form-label">欠缺技能</label>
+                        <input type="password" class="form-control" name="shortSkill" id="short_skill"/>
+                        <div class="validation"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="skill_label" class="form-label">技能标签</label>
+                        <input type="password" class="form-control" name="skill_label" id="skill_label"/>
+                        <div class="validation"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="person_label" class="form-label">个人标签</label>
+                        <input type="text" class="form-control" name="personLabel" id="person_label" placeholder="自我评价"/>
                         <div class="validation"></div>
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="inputfile">上传简历</label>
                         <input class="form-control" type="file" id="inputfile">
                     </div>
-                    <div class="form-group">
-                        <label for="password" class="form-label">密码</label>
-                        <input type="password" class="form-control" name="password" id="password" placeholder=""
-                               data-rule="minlen:6" data-msg="Please enter a valid email"/>
-                        <div class="validation"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="mobile" class="form-label">手机号</label>
-                        <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Subject"
-                               data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject"/>
-                        <div class="validation"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="captcha">验证码</label>
-                        <div class="input-group">
-                            <input type="text" name="captcha" id="captcha" class="form-control">
-								  <span class="input-group-btn">
-									<button class="btn btn-default" onclick="getCaptcha()" id="captcha_btn"
-                                            type="button">获取验证码
-                                    </button>
-								  </span>
-                        </div><!-- /input-group -->
-                    </div>
-                    <input type="hidden" name="userId" id="userId" value="${user.id}"/>
+
+                    <input type="hidden" name="userId" id="studentUserId" value="${user.id}"/>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-skin btn-lg btn-block">绑定</button>
+                        <button type="button" onclick="submit_student()" class="btn btn-skin btn-lg btn-block">成为学生</button>
                     </div>
                 </form>
 
@@ -270,6 +331,12 @@
             minView:3,
             startView:3
         });
+        $('#workDatetimepicker').datetimepicker({
+            autoclose:true,
+            format: 'yyyy-mm-dd',
+            minView:3,
+            startView:3
+        });
     });
     function select_province(id,name) {
         $("#province_btn").text(name);
@@ -282,6 +349,18 @@
     function select_area(id,name) {
         $("#area_btn").text(name);
         $("#area").val(id);
+    }
+    function student_select_province(id,name) {
+        $("#student_province_btn").text(name);
+        $("#student_province").val(id);
+    }
+    function student_select_city(id,name) {
+        $("#student_city_btn").text(name);
+        $("#student_city").val(id);
+    }
+    function student_select_area(id,name) {
+        $("#student_area_btn").text(name);
+        $("#student_area").val(id);
     }
 </script>
 </body>

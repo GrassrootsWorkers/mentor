@@ -9,6 +9,7 @@ import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomi
 import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -21,7 +22,10 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 @SpringBootApplication
 @EnableScheduling
@@ -83,4 +87,21 @@ public class MentorApplication {
 		converter.setSupportedMediaTypes(Arrays.asList(new MediaType("text", "plain", Charset.forName("UTF-8"))));
 		return converter;
 	}*/
+
+	@Bean
+	public Converter<String, Date> addNewConvert() {
+		return new Converter<String, Date>() {
+			@Override
+			public Date convert(String source) {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				Date date = null;
+				try {
+					date = sdf.parse((String) source);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				return date;
+			}
+		};
+	}
 }

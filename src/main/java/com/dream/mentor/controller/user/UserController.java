@@ -1,6 +1,7 @@
 package com.dream.mentor.controller.user;
 
 import com.dream.mentor.BaseAction;
+import com.dream.mentor.bean.user.ExtraUserVo;
 import com.dream.mentor.bean.user.MentorExtraUser;
 import com.dream.mentor.bean.user.MentorUser;
 import com.dream.mentor.cache.IRedisCache;
@@ -58,7 +59,7 @@ public class UserController extends BaseAction {
         }else{
             try {
                 int count = userService.updateMentorUser(user);
-                if(count >0){
+                if(count >=0){
                     model.addAttribute("user",user);
                     return "user/bind_success";
                 }
@@ -83,19 +84,6 @@ public class UserController extends BaseAction {
         return result;
     }
 
-    @RequestMapping(value = "testSave", method = RequestMethod.GET)
-    @ResponseBody
-    public String testSave(String openId){
-        MentorUser user = new MentorUser();
-        user.setPassword("12312");
-        user.setOpenId(openId);
-        try {
-            userService.saveUser(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return user.getId()+"";
-    }
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public Map<String,String> userLogin(HttpServletResponse response,String userName, String password){
@@ -143,6 +131,19 @@ public class UserController extends BaseAction {
     @RequestMapping(value = "/teacher/extra", method = RequestMethod.POST)
     public String saveExtraUserInfo(MentorExtraUser extraUser){
         int id = userService.saveExtraUser(extraUser);
-        return  "next";//上传项目经历
+        return  "teacher/project_experience";//上传项目经历
+    }
+    @RequestMapping(value = "/student/extra", method = RequestMethod.POST)
+    public String saveStudentExtraUserInfo(ExtraUserVo extraUserVo){
+        MentorExtraUser extraUser = new MentorExtraUser();
+        extraUser.setUserId(extraUserVo.getUserId());
+        extraUser.setProvince(extraUserVo.getProvince());
+        extraUser.setCity(extraUserVo.getCity());
+        extraUser.setArea(extraUserVo.getArea());
+        extraUser.setGraduateDate(extraUserVo.getGraduateDate());
+        extraUser.setName(extraUserVo.getName());
+        extraUser.setSchool(extraUserVo.getSchool());
+
+        return "teacher/list";
     }
 }

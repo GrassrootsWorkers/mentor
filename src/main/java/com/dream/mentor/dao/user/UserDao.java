@@ -42,7 +42,7 @@ public interface UserDao {
     @UpdateProvider(type = UserSqlProvider.class, method = "updateMentorUser")
     int updateUser(MentorUser mentorUser);
     //添加用户扩展信息
-    @Insert("insert into mentor_user_extras (user_id,name,province,city,area,graduate_date,school,major,resume_url,interests,create_date,update_dat) " +
+    @Insert("insert into mentor_user_extras (user_id,name,province,city,area,graduate_date,school,major,resume_url,interests,create_date,update_date) " +
                    "values" +
                    "(#{extraUser.userId},#{extraUser.name},#{extraUser.province},#{extraUser.city},#{extraUser.area},#{extraUser.graduateDate},#{extraUser.school},#{extraUser.major},#{extraUser.resumeUrl},#{extraUser.interests},now(),now())")
     @Options(useGeneratedKeys = true, keyProperty = "extraUser.id")
