@@ -19,8 +19,8 @@ public interface UserDao {
             " from mentor_users  where open_id = #{openId}")
     MentorUser getUserByOpenId(@Param("openId") String openId);
 
-    @Select("select id,user_name,mobile,open_id,password,register_date,user_type,salt,user_status,login_date,create_date,update_date" +
-            " from mentor_users  where user_name = #{userName}")
+    @Select("select id,user_name userName,mobile,open_id openId,password,register_date,user_type userType,salt,login_date,create_date,update_date" +
+            " from mentor_users  where (user_name = #{userName} or mobile = #{userName}) and user_status = 1")
     MentorUser getUserByUserName(@Param("userName") String userName);
 
     /**
@@ -35,7 +35,7 @@ public interface UserDao {
 
     @Insert("insert into mentor_users (user_name,mobile,open_id,password,register_date,user_type,salt,user_status,login_date,create_date,update_date) " +
             "values" +
-            "(#{user.userName},#{user.mobile},#{user.openId},#{user.password},#{user.registerDate},#{user.userType},#{user.salt},#{user.userStatus},#{user.loginDate},#{user.createDate},#{user.updateDate})")
+            "(#{user.userName},#{user.mobile},#{user.openId},#{user.password},now(),#{user.userType},#{user.salt},#{user.userStatus},#{user.loginDate},now(),now()")
     @Options(useGeneratedKeys = true, keyProperty = "user.id")
     int saveUser(@Param("user") MentorUser mentorUser);
 

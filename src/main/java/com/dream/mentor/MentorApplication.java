@@ -1,6 +1,7 @@
 package com.dream.mentor;
 
-import freemarker.template.TemplateException;
+import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.google.code.kaptcha.util.Config;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,21 +12,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.ui.freemarker.FreeMarkerConfigurationFactory;
-import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Properties;
 
 @SpringBootApplication
 @EnableScheduling
@@ -87,7 +80,25 @@ public class MentorApplication {
 		converter.setSupportedMediaTypes(Arrays.asList(new MediaType("text", "plain", Charset.forName("UTF-8"))));
 		return converter;
 	}*/
-
+	@Bean
+	public DefaultKaptcha captchaProducer(){
+		DefaultKaptcha captchaProducer =new DefaultKaptcha();
+		Properties properties =new Properties();
+		properties.setProperty("kaptcha.border","no");
+		properties.setProperty("kaptcha.textproducer.char.string","0123456789");
+		properties.setProperty("kaptcha.border.color","105,179,90");
+		//properties.setProperty("kaptcha.textproducer.font.color","blue");
+		properties.setProperty("kaptcha.image.width","200");
+		properties.setProperty("kaptcha.image.height","34");
+		properties.setProperty("kaptcha.textproducer.font.size","25");
+		properties.setProperty("kaptcha.session.key","code");
+		properties.setProperty("kaptcha.textproducer.char.space","25");
+		properties.setProperty("kaptcha.textproducer.char.length","4");
+		properties.setProperty("kaptcha.textproducer.font.names","宋体,楷体,微软雅黑");
+		Config config=new Config(properties);
+		captchaProducer.setConfig(config);
+		return  captchaProducer;
+	}
 	@Bean
 	public Converter<String, Date> addNewConvert() {
 		return new Converter<String, Date>() {

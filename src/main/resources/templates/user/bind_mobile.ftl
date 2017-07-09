@@ -116,7 +116,7 @@
     <div class="container">
         <div class="row marginbot-80">
             <div class="col-md-8 col-md-offset-2">
-                <form action="/mentor/user/bind" method="post" method="post" role="form" class="contactForm">
+                <form action="/mentor/user/bind" method="post" role="form" class="contactForm">
                     <div class="form-group">
                         <label for="name" class="form-label">登陆名</label>
                         <input type="text" name="userName" class="form-control" id="name" placeholder="登录名" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />

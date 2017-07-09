@@ -1,38 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh_CN">
 <head>
-    <meta content="text/html;charset=utf-8"/>
-    <title>注册用户</title>
-    <script src="/js/jquery-3.2.1.min.js"></script>
-    <link rel="stylesheet" href="/plugin/bootstrap/css/bootstrap.min.css"/>
-    <script src="/plugin/bootstrap/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8"> <!-- for HTML5 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>绑定手机号</title>
+    <!-- css -->
+    <link href="/plugin/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="/css/nivo-lightbox.css" rel="stylesheet" />
+    <link href="/css/nivo-lightbox-theme/default/default.css" rel="stylesheet" type="text/css" />
+    <link href="/css/owl.carousel.css" rel="stylesheet" media="screen" />
+    <link href="/css/owl.theme.css" rel="stylesheet" media="screen" />
+    <link href="/css/flexslider.css" rel="stylesheet" />
+    <link href="/css/animate.css" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/color/default.css" rel="stylesheet">
 </head>
-<body>
-<div class="container">
-    <form class="form-horizontal" role="form" >
-        <div class="form-group">
-            <label for="user_name" class="col-sm-2 control-label">用户名</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="user_name"  name = "userName" placeholder="请输入用户名">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="password" class="col-sm-2 control-label">密码</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码">
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="button"  onclick="login()" class="btn btn-default">登录</button>
+<body id="page-top" data-spy="scroll" data-target=".navbar-custom">
+
+<!-- Section: contact -->
+<section id="contact" style="padding-top:35px;" class="home-section nopadd-bot color-dark bg-gray text-center">
+    <div class="container marginbot-20">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
+                    <div class="section-heading text-center">
+                        <h2 class="h-bold">用户登录</h2>
+                        <p></p>
+                    </div>
+                </div>
             </div>
         </div>
-    </form>
-</div>
-<script src="/js/jquery.cookie.js"></script>
+    </div>
+    <div class="container">
+        <div class="row marginbot-80">
+            <div class="col-md-8 col-md-offset-2">
+                <form action="/mentor/user/bind" method="post"  role="form" class="contactForm">
+                    <div class="form-group">
+                        <label for="name" class="form-label">用户名</label>
+                        <input type="text" name="userName" class="form-control" id="name" placeholder="登录名"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="form-label">密码</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="绑定手机时设定的密码"  />
+                    </div>
+                    <div class="form-group">
+                        <label for="captcha">验证码</label>
+                        <div class="input-group">
+                            <input type="text" name="captcha" id="captcha" class="form-control">
+								  <span class="input-group-btn">
+									<img class="yzm_img" id="loginVcode" title="点击刷新验证码"  onclick="this.src='/mentor/kaptcha/login?t='+(new Date()).getTime()"  alt="验证码"/>
+								  </span>
+                        </div>
+                    </div>
+                    <div class="text-center"><button type="submit" class="btn btn-skin btn-lg btn-block">登录</button></div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /Section: contact -->
+
+<!-- Core JavaScript Files -->
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="/plugin/bootstrap/js/bootstrap.min.js"></script>
+<script src="/js/jquery.sticky.js"></script>
+<script src="/js/jquery.flexslider-min.js"></script>
+<script src="/js/jquery.easing.min.js"></script>
+<script src="/js/jquery.scrollTo.js"></script>
+<script src="/js/jquery.appear.js"></script>
+<script src="/js/stellar.js"></script>
+<script src="/js/wow.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/nivo-lightbox.min.js"></script>
 <script type="text/javascript">
-
+    $(document).ready(function () {
+        $("#loginVcode").trigger("click");
+    });
     function login() {
         $.ajax({
             url:"/mentorUser/login",
@@ -60,4 +109,5 @@
     }
 </script>
 </body>
+
 </html>

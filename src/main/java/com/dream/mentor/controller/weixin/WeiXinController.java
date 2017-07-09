@@ -1,6 +1,8 @@
 package com.dream.mentor.controller.weixin;
 
 import com.dream.mentor.BaseAction;
+import com.dream.mentor.bean.constant.UserStatusEnum;
+import com.dream.mentor.bean.constant.UserTypeEnum;
 import com.dream.mentor.bean.user.MentorUser;
 import com.dream.mentor.bean.weixin.ReceivedMessage;
 import com.dream.mentor.bean.weixin.SendMessage;
@@ -76,6 +78,8 @@ public class WeiXinController extends BaseAction {
                     MentorUser user = new MentorUser();
                     user.setOpenId(receivedMsg.getFromUserName());
                     user.setPassword("123456");
+                    user.setUserType(UserTypeEnum.STUDENT.getValue());
+                    user.setUserStatus(UserStatusEnum.USING.getValue());
                     userService.saveUser(user);
                     sendMessage.setContent(String.format("<a href='http://mentor.sangepg.com/mentor/user/to/bind?openId=%s&userId=%d'>完善用户信息</a>", receivedMsg.getFromUserName(),user.getId()));
 
