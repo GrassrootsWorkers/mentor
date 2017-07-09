@@ -1,5 +1,6 @@
 package com.dream.mentor;
 
+import freemarker.template.TemplateException;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,8 +10,17 @@ import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.ui.freemarker.FreeMarkerConfigurationFactory;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -47,4 +57,30 @@ public class MentorApplication {
 			}
 		};
 	}
+	/*@Bean
+	public ViewResolver viewResolver() {
+		FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();
+		resolver.setCache(true);
+		resolver.setPrefix("");
+		resolver.setSuffix(".ftl");
+		resolver.setContentType("text/html; charset=UTF-8");
+		return resolver;
+	}
+
+	@Bean
+	public FreeMarkerConfigurer freemarkerConfig() throws IOException, TemplateException {
+		FreeMarkerConfigurationFactory factory = new FreeMarkerConfigurationFactory();
+		factory.setTemplateLoaderPaths("classpath:templates", "src/main/resource/templates");
+		factory.setDefaultEncoding("UTF-8");
+		FreeMarkerConfigurer result = new FreeMarkerConfigurer();
+		result.setDefaultEncoding("UTF-8");
+		result.setConfiguration(factory.createConfiguration());
+		return result;
+	}*/
+	/*@Bean
+	public HttpMessageConverter<String> responseBodyConverter() {
+		StringHttpMessageConverter converter = new StringHttpMessageConverter();
+		converter.setSupportedMediaTypes(Arrays.asList(new MediaType("text", "plain", Charset.forName("UTF-8"))));
+		return converter;
+	}*/
 }

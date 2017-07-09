@@ -1,5 +1,6 @@
 package com.dream.mentor.interfaces.user;
 
+import com.dream.mentor.bean.user.MentorExtraUser;
 import com.dream.mentor.bean.user.MentorUser;
 
 import java.security.NoSuchAlgorithmException;
@@ -15,7 +16,9 @@ public interface IUserService {
      * @return
      * @throws Exception
      */
-    long saveUser(MentorUser mentorUser) throws Exception;
+    int saveUser(MentorUser mentorUser) throws Exception;
+
+
 
     /**
      * 根据用户名查询用户
@@ -53,4 +56,18 @@ public interface IUserService {
      * @return
      */
     String userLogin(MentorUser mentorUser, String password, String platform);
+
+    /**
+     * 保存用户附件信息
+     * @param extraUser
+     * @return
+     */
+    int saveExtraUser(MentorExtraUser extraUser);
+
+    /**
+     * 获取用户扩展信息
+     * @param userId
+     * @return
+     */
+    MentorExtraUser getExtraUserByUserId(int userId);
 }

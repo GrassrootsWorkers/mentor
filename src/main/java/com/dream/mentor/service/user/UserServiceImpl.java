@@ -1,5 +1,6 @@
 package com.dream.mentor.service.user;
 
+import com.dream.mentor.bean.user.MentorExtraUser;
 import com.dream.mentor.bean.user.MentorUser;
 import com.dream.mentor.common.StringUtil;
 import com.dream.mentor.dao.user.UserDao;
@@ -27,7 +28,7 @@ public class UserServiceImpl implements IUserService {
     private UserDao userDao;
 
     @Override
-    public long saveUser(MentorUser mentorUser) throws Exception {
+    public int saveUser(MentorUser mentorUser) throws Exception {
         String salt = PBKDFUtil.generateSalt();
         mentorUser.setSalt(salt);
         String password = PBKDFUtil.getEncryptedPassword(mentorUser.getPassword(), salt);
@@ -102,5 +103,16 @@ public class UserServiceImpl implements IUserService {
             e.printStackTrace();
         }
         return accessToken;
+    }
+
+    @Override
+    public int saveExtraUser(MentorExtraUser extraUser) {
+        userDao.saveExtraUserInfo(extraUser);
+        return extraUser.getId();
+    }
+
+    @Override
+    public MentorExtraUser getExtraUserByUserId(int userId) {
+        return userDao.getExtraUserByUserId(userId);
     }
 }

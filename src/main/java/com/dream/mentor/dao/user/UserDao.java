@@ -1,5 +1,6 @@
 package com.dream.mentor.dao.user;
 
+import com.dream.mentor.bean.user.MentorExtraUser;
 import com.dream.mentor.bean.user.MentorUser;
 import org.apache.ibatis.annotations.*;
 
@@ -36,8 +37,17 @@ public interface UserDao {
             "values" +
             "(#{user.userName},#{user.mobile},#{user.openId},#{user.password},#{user.registerDate},#{user.userType},#{user.salt},#{user.userStatus},#{user.loginDate},#{user.createDate},#{user.updateDate})")
     @Options(useGeneratedKeys = true, keyProperty = "user.id")
-    long saveUser(@Param("user") MentorUser mentorUser);
+    int saveUser(@Param("user") MentorUser mentorUser);
 
     @UpdateProvider(type = UserSqlProvider.class, method = "updateMentorUser")
     int updateUser(MentorUser mentorUser);
+    //添加用户扩展信息
+    @Insert("insert into mentor_user_extras (user_id,name,province,city,area,graduate_date,school,major,resume_url,interests,create_date,update_dat) " +
+                   "values" +
+                   "(#{extraUser.userId},#{extraUser.name},#{extraUser.province},#{extraUser.city},#{extraUser.area},#{extraUser.graduateDate},#{extraUser.school},#{extraUser.major},#{extraUser.resumeUrl},#{extraUser.interests},now(),now())")
+    @Options(useGeneratedKeys = true, keyProperty = "extraUser.id")
+    int saveExtraUserInfo(@Param("extraUser") MentorExtraUser extraUser);
+
+    @Select("select name,province,city,area,graduate_date graduateDate,school,major,resume_url resumeUrl,interests from mentor_user_extras where user_id = #{userId} ")
+    MentorExtraUser getExtraUserByUserId(@Param("userId") int userId);
 }
